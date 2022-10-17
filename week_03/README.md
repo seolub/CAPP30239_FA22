@@ -23,4 +23,4 @@ Most of the data was gathered between 2009 and 2013. This means that the 'Inequa
 
 
 # D3 Practice
-The file library_visits_jan22.csv contains data of visits by library. The code homework.html and homework.js are used to creart a D3 visualization.
+The file library_visits_jan22.csv contains data of visits by library. The code homework.html and homework.js are used to create a D3 visualization.
