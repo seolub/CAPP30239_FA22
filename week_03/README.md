@@ -1,3 +1,4 @@
+# Data for Final Project
 ## Data Source
 
 The file Final_data.csv contains data extracted from different data files from the Chicago data portal. The raw files can be found in the folder "/data". They python script that executes the ETL process is also saved in this folder. Data is provided by Chicago Public Schools, U.S. Census Bureau, and Illinois Department of Public Health (IDPH).
@@ -19,3 +20,7 @@ We will then be able to have an 'Inequality Map'. This visualization will show h
 ## Concerns
 
 Most of the data was gathered between 2009 and 2013. This means that the 'Inequality Map' will be a representation of a past Chicago, and not the current Chicago.
+
+
+# D3 Practice
+The file library_visits_jan22.csv contains data of visits by library. The code homework.html and homework.js are used to creart a D3 visualization.
