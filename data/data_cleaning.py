@@ -47,7 +47,7 @@ def check_community_area(lat, lon, gj):
 
 schoolsDF['Community Area'] = schoolsDF.apply(lambda x: check_community_area(x['Latitude'], x['Longitude'], gj), axis = 1)
 
-schoolsDF = schoolsDF.loc[:,['Community Area', 'Grade ACT Attainment Percentile Grade 11']].groupby('Community Area').agg(lambda g: g.mean(skipna=True))
+schoolsDF = schoolsDF.loc[:,['Community Area', 'Grade ACT Attainment Percentile Grade 11']].groupby('Community Area').mean()
 
 final = final.drop(77,) #remove Chicago
 final['Community Area Number'] = final['Community Area Number'].astype(int).astype(str)
