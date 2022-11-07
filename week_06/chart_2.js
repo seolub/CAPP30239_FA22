@@ -3,14 +3,14 @@
 d3.csv("cleaned_data.csv").then(data => { //promise controls the flow, get the data and do everthing else
 
     // for (let d of data) {
-    //     d.cases = +d.cases; //force a number, converts string to integer. D is each row of the data (cases is name of column)
+    //     d.Percentage = +d.Percentage; //force a number, converts string to integer. D is each row of the data (cases is name of column)
     // };
 
     data.sort((a, b) => b.Percentage - a.Percentage); //from bigger to smaller, we could also order by country
 
     const height = 600,
           width = 800,
-          margin = ({ top: 25, right: 150, bottom: 50, left: 150 });
+          margin = ({ top: 25, right: 100, bottom: 50, left: 150 });
 
     let svg = d3.select("#chart_2")
         .append("svg")
@@ -21,7 +21,7 @@ d3.csv("cleaned_data.csv").then(data => { //promise controls the flow, get the d
         .range([margin.left, width - margin.right]);
     
     let y = d3.scaleBand()
-        .domain(data.map(d => d.NameState)) //with map is a loop looping through d.country)
+        .domain(data.map(d => d.NameState)) 
         .range([margin.top, height - margin.bottom]) 
         .padding(0.1);
 
@@ -48,13 +48,14 @@ d3.csv("cleaned_data.csv").then(data => { //promise controls the flow, get the d
     
     bar.append('text') // add labels
         .text(d => d.Total)
-        .attr('x', d => margin.left + x(d.Percentage) - 10)
+        .attr('x', d => margin.left + x(d.Percentage) + 20)
         .attr('y', d => y(d.NameState) + (y.bandwidth()/2))
         .attr('text-anchor', 'end')
         .attr('dominant-baseline', 'middle')
-        .style('fill', 'white');
+        .style('fill', 'black');
 
     svg.append("text") //text outside the bar
+    .attr('font-size', 5)
     .attr("class", "x-label")
     .attr("text-anchor", "end")
     .attr('x', width - margin.right)
