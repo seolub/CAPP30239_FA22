@@ -1,114 +1,64 @@
-var width = 400;
-var height = 700;
+/* Horizontal bar chart for COVID country cases */
 
-var lowColor = '#f9f9f9'
-var highColor = '#bc2a66'
+d3.csv("cleaned_data.csv").then(data => { //promise controls the flow, get the data and do everthing else
 
-// D3 Projection
-var projection = d3.geoAlbersUsa()
-  .translate([width / 2, height / 2]) // translate to center of screen
-  .scale([1000]); // scale things down so see entire US
+    // for (let d of data) {
+    //     d.cases = +d.cases; //force a number, converts string to integer. D is each row of the data (cases is name of column)
+    // };
 
-// Define path generator
-var path = d3.geoPath() // path generator that will convert GeoJSON to SVG paths
-  .projection(projection); // tell path generator to use albersUsa projection
+    data.sort((a, b) => b.Percentage - a.Percentage); //from bigger to smaller, we could also order by country
 
-//Create SVG element and append map to the SVG
-var svg = d3.select("#chart2")
-  .append("svg")
-  .attr("width", width)
-  .attr("height", height);
+    const height = 600,
+          width = 800,
+          margin = ({ top: 25, right: 150, bottom: 50, left: 150 });
 
-// Load in my states data!
-d3.csv("cleaned_data.csv", function(data) {
-	var dataArray = [];
-	for (var d = 0; d < data.length; d++) {
-		dataArray.push(parseFloat(data[d].Percentage))
-	}
-	var minVal = d3.min(dataArray)
-	var maxVal = d3.max(dataArray)
-	var ramp = d3.scaleLinear().domain([minVal,maxVal]).range([lowColor,highColor])
-	
-  // Load GeoJSON data and merge with states data
-  d3.json("us-states.json", function(json) {
+    let svg = d3.select("#chart_2")
+        .append("svg")
+        .attr("viewBox", [0, 0, width, height]); // for resizing element in browser
 
-    // Loop through each state data value in the .csv file
-    for (var i = 0; i < data.length; i++) {
-
-      // Grab State Name
-      var dataState = data[i].NameState;
-
-      // Grab data value 
-      var dataValue = data[i].Percentage;
-
-      // Find the corresponding state inside the GeoJSON
-      for (var j = 0; j < json.features.length; j++) {
-        var jsonState = json.features[j].properties.name;
-
-        if (dataState == jsonState) {
-
-          // Copy the data value into the JSON
-          json.features[j].properties.value = dataValue;
-
-          // Stop looking through the JSON
-          break;
-        }
-      }
-    }
-
-    // Bind the data to the SVG and create one path per GeoJSON feature
-    svg.selectAll("path")
-      .data(json.features)
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .style("stroke", "#fff")
-      .style("stroke-width", "1")
-      .style("fill", function(d) { return ramp(d.properties.value) });
+    let x = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.Percentage)]).nice() //we've flipped the axes to horizontal
+        .range([margin.left, width - margin.right]);
     
-		// add a legend
-		var w = 140, h = 300;
+    let y = d3.scaleBand()
+        .domain(data.map(d => d.NameState)) //with map is a loop looping through d.country)
+        .range([margin.top, height - margin.bottom]) 
+        .padding(0.1);
 
-		var key = d3.select("#chart2")
-			.append("svg")
-			.attr("width", w)
-			.attr("height", h)
-			.attr("class", "legend");
+    svg.append("g")
+        .attr("transform", `translate(0,${height - margin.bottom + 5})`) // move location of axis
+        .call(d3.axisBottom(x)); 
+    
+    svg.append("g")
+        .attr("transform", `translate(${margin.left - 5},0)`)
+        .call(d3.axisLeft(y));
 
-		var legend = key.append("defs")
-			.append("svg:linearGradient")
-			.attr("id", "gradient")
-			.attr("x1", "100%")
-			.attr("y1", "0%")
-			.attr("x2", "100%")
-			.attr("y2", "100%")
-			.attr("spreadMethod", "pad");
+    let bar = svg.selectAll(".bar") // create bar groups
+        .append("g")
+        .data(data)
+        .join("g")
+        .attr("class", "bar");
 
-		legend.append("stop")
-			.attr("offset", "0%")
-			.attr("stop-color", highColor)
-			.attr("stop-opacity", 1);
-			
-		legend.append("stop")
-			.attr("offset", "100%")
-			.attr("stop-color", lowColor)
-			.attr("stop-opacity", 1);
+    bar.append("rect") // add rect to bar group
+        .attr("fill", "steelblue")
+        .attr("x", margin.left)
+        .attr("width", d => x(d.Percentage))
+        .attr("y", d => y(d.NameState))
+        .attr("height", y.bandwidth());
+    
+    bar.append('text') // add labels
+        .text(d => d.Total)
+        .attr('x', d => margin.left + x(d.Percentage) - 10)
+        .attr('y', d => y(d.NameState) + (y.bandwidth()/2))
+        .attr('text-anchor', 'end')
+        .attr('dominant-baseline', 'middle')
+        .style('fill', 'white');
 
-		key.append("rect")
-			.attr("width", w - 100)
-			.attr("height", h)
-			.style("fill", "url(#gradient)")
-			.attr("transform", "translate(0,10)");
+    svg.append("text") //text outside the bar
+    .attr("class", "x-label")
+    .attr("text-anchor", "end")
+    .attr('x', width - margin.right)
+    .attr("y", height)
+    .text("Percentage Total %")
 
-		var y = d3.scaleLinear()
-			.range([h, 0])
-			.domain([minVal, maxVal]);
-
-		var yAxis = d3.axisRight(y);
-
-		key.append("g")
-			.attr("class", "y axis")
-			.attr("transform", "translate(41,10)")
-			.call(yAxis)
-  });
 });
