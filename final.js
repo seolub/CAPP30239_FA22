@@ -9,11 +9,11 @@ d3.csv('data/final_data.csv').then(data => {
         }) 
 
     chart2 = BeeswarmChart(data, {
-        x: d => Number(d.ACT_GRADE11),
+        x: d => Number(d.ACT_GRADE11), //when zero
         xLabel: "ACT_GRADE11 (Percentile) →",
         title: d => d.Community_Area_Number,
         width: 600
-        }) 
+        })
     
     chart3 = BeeswarmChart(data, {
         x: d => Number(d['2010LifeExpectancy']),
