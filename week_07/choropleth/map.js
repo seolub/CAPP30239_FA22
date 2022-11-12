@@ -11,14 +11,14 @@ const svg = d3.select("#chart")
   .append("svg")
   .attr("viewBox", [0, 0, width, height]);
 
-Promise.all([ //load two datasets
+Promise.all([
   d3.csv("data/unemployment2020.csv"),
   d3.json("libs/counties-albers-10m.json")
 ]).then(([data, us]) => {
   const dataById = {};
 
   for (let d of data) {
-    d.rate = +d.rate; //convert in integer
+    d.rate = +d.rate;
     //making a lookup table from the array (unemployment data)
     dataById[d.id] = d;
   }
@@ -27,8 +27,8 @@ Promise.all([ //load two datasets
 
   // Quantize evenly breakups domain into range buckets
   const color = d3.scaleQuantize()
-    .domain([0, 10]).nice() //10 different buckets of blue
-    .range(d3.schemeBlues[9]); //9 values of blue
+    .domain([0, 10]).nice()
+    .range(d3.schemeBlues[9]);
 
   const path = d3.geoPath();
 

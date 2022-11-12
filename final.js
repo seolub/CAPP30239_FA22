@@ -8,7 +8,9 @@ d3.csv('data/final_data.csv').then(data => {
         width: 600
         }) 
 
-    chart2 = BeeswarmChart(data, {
+    chart2 = BeeswarmChart(
+      data.filter((d) => d.ACT_GRADE11 > 0),
+      {
         x: d => Number(d.ACT_GRADE11), //when zero
         xLabel: "ACT_GRADE11 (Percentile) →",
         title: d => d.Community_Area_Number,
@@ -16,7 +18,7 @@ d3.csv('data/final_data.csv').then(data => {
         })
     
     chart3 = BeeswarmChart(data, {
-        x: d => Number(d['2010LifeExpectancy']),
+        x: d => Number(d.LifeExpectancy),
         xLabel: "Life Expectancy →",
         title: d => d.Community_Area_Number,
         width: 600
@@ -71,7 +73,7 @@ function BeeswarmChart(data, {
     const xScale = d3.scaleLinear(xDomain, xRange);
     const xAxis = d3.axisBottom(xScale).tickSizeOuter(0);
   
-    // Compute the y-positions.
+    // Compute the y-positions.c
     const Y = dodge(I.map(i => xScale(X[i])), radius * 2 + padding);
   
     // Compute the default height;
@@ -139,6 +141,11 @@ function BeeswarmChart(data, {
             .attr("fill", "currentColor")
             .attr("text-anchor", "end")
             .text(xLabel));
+
+    const color_1 = d3
+      .scaleQuantile()
+      .domain(d3.extent(data, (d) => d.INCOMEPC))
+      .range(d3.schemeBlues[9]);
   
     const dot = svg.append("g")
       .selectAll("circle")
@@ -146,7 +153,8 @@ function BeeswarmChart(data, {
       .join("circle")
         .attr("cx", i => xScale(X[i]))
         .attr("cy", i => (marginTop + height - marginBottom) / 2 + Y[i])
-        .attr("r", radius);
+        .attr("r", radius)
+        .attr('fill', function (d) {return color_1(d.INCOMEPC)});
   
     if (T) dot.append("title")
         .text(i => T[i]);

@@ -10,7 +10,7 @@ d3.csv("covid.csv").then(data => { //promise controls the flow, get the data and
 
     const height = 600,
           width = 800,
-          margin = ({ top: 25, right: 30, bottom: 55, left: 50 });
+          margin = ({ top: 25, right: 100, bottom: 55, left: 50 });
 
     let svg = d3.select("#horizontal-chart")
         .append("svg")
@@ -18,7 +18,7 @@ d3.csv("covid.csv").then(data => { //promise controls the flow, get the data and
 
     let x = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.cases)]).nice() //we've flipped the axes to horizontal
-        .range([margin.left, width - margin.right]);
+        .range([0, width - margin.right]);
     
     let y = d3.scaleBand()
         .domain(data.map(d => d.country)) //with map is a loop looping through d.country)

@@ -4,62 +4,67 @@ const tooltip = d3.select("body")
   .style("position", "absolute")
   .style("visibility", "hidden");
 
-const height = 610,
-  width = 975;
-
-const svg = d3.select("#chart")
+const svg_map = d3
+  .select("#illinois")
   .append("svg")
   .attr("viewBox", [0, 0, width, height]);
 
-Promise.all([ //load two datasets
+Promise.all([
+  //load two datasets
   d3.csv("data/Final_data.csv"),
-  d3.json("data/Boundaries - Community Areas(current).geojson")
+  d3.json("data/Boundaries - Community Areas (current).geojson"),
 ]).then(([data, chi]) => {
   const dataById = {};
 
   for (let d of data) {
-    d.INCOMEPC = +d.INCOMEPC; //convert in integer
-    //making a lookup table from the array (unemployment data)
-    dataById[d.id] = d;
+    d.INCOMEPC = +d.INCOMEPC; 
+    dataById[d["Community_Area_Number"]] = d;
   }
+  console.log(dataById)
+  const communities = chi;
 
-  const counties = topojson.feature(chi, chi.objects.counties);
+  // linear color scale
+  const color = d3
+    .scaleQuantile()
+    .domain(d3.extent(data, (d) => d.INCOMEPC))
+    .range(d3.schemeBlues[9]);
 
-  // Quantize evenly breakups domain into range buckets
-  const color = d3.scaleQuantize()
-    .domain([0, 10]).nice() //10 different buckets of blue
-    .range(d3.schemePuOr[9]); //9 values of blue
+// Chicago specific projection
+  let projection = d3
+    .geoAlbers()
+    .center([0, 41.83])
+    .rotate([87.65, 0])
+    .parallels([35, 50])
+    .scale(70000)
+    .translate([width / 2, height / 2]);
 
-  const path = d3.geoPath();
+  let geoGenerator = d3.geoPath().projection(projection);
 
-  d3.select("#legend")
-    .node()
-    .appendChild(
-      Legend(
-        d3.scaleOrdinal(
-          ["1", "2", "3", "4", "5", "6", "7", "8", "9+"],
-          d3.schemeBlues[9]
-        ),
-        { title: "Unemployment rate (%)" }
-      ));
-
-  svg.append("g")
+  svg_map
+    .append("g")
     .selectAll("path")
-    .data(counties.features)
+    .data(communities.features)
     .join("path")
-    .attr("fill", d => (d.id in dataById) ? color(dataById[d.id].rate) : '#ccc')
-    .attr("d", path)
+    .attr("d", geoGenerator)
+    .attr("fill", (d) => {
+      return dataById[d.properties.area_num_1]?.INCOMEPC
+        ? color(+dataById[d.properties.area_num_1].INCOMEPC)
+        : "blue";
+    })
+    .attr("stroke", "black")
     .on("mousemove", function (event, d) {
-      let info = dataById[d.id];
+      let info = dataById[d.properties.area_num_1];
+      console.log(info)
       tooltip
         .style("visibility", "visible")
-        .html(`${info.county}<br>${info.rate}%`)
+        .html(`${info?.COMMUNITY_AREA_NAME}<br>${info?.INCOMEPC}$`)
         .style("top", (event.pageY - 10) + "px")
         .style("left", (event.pageX + 10) + "px");
-      d3.select(this).attr("fill", "goldenrod");
+      d3.select(this).attr("fill", "red");
     })
     .on("mouseout", function () {
       tooltip.style("visibility", "hidden");
-      d3.select(this).attr("fill", d => (d.id in dataById) ? color(dataById[d.id].rate) : '#ccc');
+      d3.select(this).attr("fill", d => (d.id in dataById) ? color(dataById[d.id].INCOMEPC) : '#ccc'); //how can i go back to blue
     });
+
 });

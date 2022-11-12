@@ -15,19 +15,19 @@ var svg = d3.select("#bubble_plot")
           "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-d3.csv("data/final_data.csv", function(data) {
+d3.csv("data/final_data.csv").then((data) => {
 
   // Add X axis
   var x = d3.scaleLinear()
-    .domain([0, 120000])
-    .range([ 0, width ]);
+    .domain([0, 100000])
+    .range([0, width ]);
   svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(d3.axisBottom(x));
 
   // Add Y axis
   var y = d3.scaleLinear()
-    .domain([0,  d3.max(data, d => d.INCOMEPC)]).nice() //domain not working
+    .domain([d3.min(data, d => d.LifeExpectancy),  d3.max(data, d => d.LifeExpectancy)]).nice() 
     .range([ height, 0]);
   svg.append("g")
     .call(d3.axisLeft(y));
@@ -35,12 +35,13 @@ d3.csv("data/final_data.csv", function(data) {
   // Add a scale for bubble size
   var z = d3.scaleLinear()
     .domain([200, 131000])
-    .range([ 1, 40]);
+    .range([1, 40]);
 
   // Add a scale for bubble color
-  var myColor = d3.scaleOrdinal()
-    .domain(["Asia", "Europe", "Americas", "Africa", "Oceania"])
-    .range(d3.schemeSet2);
+  var myColor = d3
+    .scaleQuantile()
+    .domain(d3.extent(data, (d) => d.INCOMEPC))
+    .range(d3.schemeBlues[9]);
 
   // -1- Create a tooltip div that is hidden by default:
   var tooltip = d3.select("#bubble_plot")
@@ -60,13 +61,14 @@ d3.csv("data/final_data.csv", function(data) {
     tooltip
       .style("opacity", 1)
       .html("Community Area: " + d.COMMUNITY_AREA_NAME)
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
+      .style("left", (d3.pointer(this)[0]+30) + "px")
+      .style("top", (d3.pointer(this)[1]+30) + "px")
   }
+  
   var moveTooltip = function(d) {
     tooltip
-      .style("left", (d3.mouse(this)[0]+30) + "px")
-      .style("top", (d3.mouse(this)[1]+30) + "px")
+      .style("left", (d3.pointer(this)[0]+30) + "px")
+      .style("top", (d3.pointer(this)[1]+30) + "px")
   }
   var hideTooltip = function(d) {
     tooltip
@@ -83,9 +85,9 @@ d3.csv("data/final_data.csv", function(data) {
     .append("circle")
       .attr("class", "bubbles")
       .attr("cx", function (d) { return x(d.INCOMEPC); } )
-      .attr("cy", function (d) { return y(d['2010LifeExpectancy']); } ) //make this dynamic
-      .attr("r", function (d) { return z(d.Population); } )
-      .style("fill", function (d) { return myColor(d.COMMUNITY_AREA_NAME); } )
+      .attr("cy", function (d) { return y(d.LifeExpectancy); } ) //make this dynamic
+      .attr("r", function (d) { return z(d.Population)/2; } )
+      .style("fill", function (d) { return myColor(d.INCOMEPC); } )
     // -3- Trigger the functions
     .on("mouseover", showTooltip )
     .on("mousemove", moveTooltip )
