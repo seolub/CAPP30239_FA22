@@ -1,0 +1,123 @@
+* {
+    font-family: 'Work Sans',Arial, Helvetica, sans-serif;
+  }
+
+  p {
+    font-size: 1em;
+  }
+
+  .container {
+    width: 1040px;
+    margin: 0 auto;
+  }
+
+  #chart {
+    width: 100%;
+    text-align: center;
+  }
+
+  svg {
+    max-height: 100vh;
+  }
+
+  .svg-tooltip {
+    background: rgba(69, 77, 93, .9);
+    border-radius: 5px;
+    color: #fff;
+    display: block;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: none;
+    max-width: 320px;
+    padding: 1rem;
+    position: absolute;
+    text-overflow: ellipsis;
+    white-space: pre;
+    z-index: 300;
+    visibility: hidden;
+  }
+
+  .domain {
+    display: none;
+  }
+  
+  line {
+    stroke: #ddd;
+  }
+
+  svg text {
+    font-size: 12px;
+  }
+  
+  .ring svg text {
+    font-size: 12px;
+  }
+  
+  .x-axis text {
+    transform: translateY(5px);
+  }
+  
+  .y-axis text {
+    transform: translateX(-5px);
+  }
+
+  foreignObject p {
+    font-size: 10px;
+  }
+
+  split-screen {
+    display: flex;
+}
+
+article {
+    background-color: white;
+    text-align: center;
+    padding: 2em;
+    flex-basis: 27%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  h3 {
+    text-align: center;
+  }
+
+
+.split-screen__half {
+    flex: 1;
+}
+  .x-axis text {
+    transform: translateY(5px);
+  }
+  
+  .y-axis text {
+    transform: translateX(-5px);
+  }
+
+  .visualizations {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  div {
+    display: flex;
+    column-gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .column {
+    float: left;
+    width: 25%;
+    padding: 10px;
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  @media screen and (max-width: 1800px) {
+    .column {
+      width: 100%;
+    }
+  }

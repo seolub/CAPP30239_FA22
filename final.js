@@ -61,6 +61,7 @@ function BeeswarmChart(data, {
   } = {}) {
     // Compute values.
     const X = d3.map(data, x);
+    console.log(data)
     const T = title == null ? null : d3.map(data, title);
     
     // Compute which data points are considered defined.
@@ -142,10 +143,41 @@ function BeeswarmChart(data, {
             .attr("text-anchor", "end")
             .text(xLabel));
 
+    const tooltip = d3.select("#g")
+        .append("div")  
+        .attr("class", "svg-tooltip")
+
     const color_1 = d3
       .scaleQuantile()
       .domain(d3.extent(data, (d) => d.INCOMEPC))
-      .range(d3.schemeBlues[9]);
+      .range(["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"]
+      );
+
+    const showTooltip = function(event, X) {
+      tooltip
+        .transition()
+        .duration(200)
+      tooltip
+        .style("visibility", "visible")
+        .html(`${X}`)
+        .style("top", (event.pageY - 10) + "px")
+        .style("left", (event.pageX + 10) + "px");
+        d3.select(this).style("stroke", "black");
+    }
+      const moveTooltip = function(event, X) {
+        tooltip
+        .style("top", (event.pageY - 10) + "px")
+        .style("left", (event.pageX + 10) + "px");
+      }
+      const hideTooltip = function(event, d) {
+        tooltip
+          .transition()
+          .duration(200)
+          tooltip.style("visibility", "hidden");
+        d3.select(this)
+        .style("stroke", "none")
+      }
+
   
     const dot = svg.append("g")
       .selectAll("circle")
@@ -154,7 +186,11 @@ function BeeswarmChart(data, {
         .attr("cx", i => xScale(X[i]))
         .attr("cy", i => (marginTop + height - marginBottom) / 2 + Y[i])
         .attr("r", radius)
-        .attr('fill', function (d) {return color_1(d.INCOMEPC)});
+        .attr('fill', function (i) {return color_1(data[i].INCOMEPC)})
+      // -3- Trigger the functions
+        .on("mouseover", showTooltip )
+        .on("mousemove", moveTooltip )
+        .on("mouseleave", hideTooltip )
   
     if (T) dot.append("title")
         .text(i => T[i]);

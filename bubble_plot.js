@@ -41,56 +41,54 @@ d3.csv("data/final_data.csv").then((data) => {
   var myColor = d3
     .scaleQuantile()
     .domain(d3.extent(data, (d) => d.INCOMEPC))
-    .range(d3.schemeBlues[9]);
+    .range(["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"]);
 
-  // -1- Create a tooltip div that is hidden by default:
-  var tooltip = d3.select("#bubble_plot")
-    .append("div")
-      .style("opacity", 0)
-      .attr("class", "tooltip")
-      .style("background-color", "black")
-      .style("border-radius", "5px")
-      .style("padding", "10px")
-      .style("color", "white")
+   // -1- Create a tooltip div that is hidden by default:
+   const tooltip = d3.select("#bubble_plot")
+      .append("div")
+      .attr("class", "svg-tooltip");
 
-  // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
-  var showTooltip = function(d) {
-    tooltip
-      .transition()
-      .duration(200)
-    tooltip
-      .style("opacity", 1)
-      .html("Community Area: " + d.COMMUNITY_AREA_NAME)
-      .style("left", (d3.pointer(this)[0]+30) + "px")
-      .style("top", (d3.pointer(this)[1]+30) + "px")
-  }
-  
-  var moveTooltip = function(d) {
-    tooltip
-      .style("left", (d3.pointer(this)[0]+30) + "px")
-      .style("top", (d3.pointer(this)[1]+30) + "px")
-  }
-  var hideTooltip = function(d) {
-    tooltip
-      .transition()
-      .duration(200)
-      .style("opacity", 0)
-  }
+ // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
+    const showTooltip = function(event, d) {
+      tooltip
+        .transition()
+        .duration(200)
+      tooltip
+        .style("visibility", "visible")
+        .html(`${d.COMMUNITY_AREA_NAME} <br> ${d.LifeExpectancy} `)
+        .style("top", (event.pageY - 10) + "px")
+        .style("left", (event.pageX + 10) + "px");
+        d3.select(this).style("stroke", "black");
+    }
+    const moveTooltip = function(event, d) {
+      tooltip
+      .style("top", (event.pageY - 10) + "px")
+      .style("left", (event.pageX + 10) + "px");
+    }
+    const hideTooltip = function(event, d) {
+      tooltip
+        .transition()
+        .duration(200)
+        tooltip.style("visibility", "hidden");
+      d3.select(this)
+      .style("stroke", "none")
+    }
 
-  // Add dots
-  svg.append('g')
-    .selectAll("dot")
-    .data(data)
-    .enter()
-    .append("circle")
-      .attr("class", "bubbles")
-      .attr("cx", function (d) { return x(d.INCOMEPC); } )
-      .attr("cy", function (d) { return y(d.LifeExpectancy); } ) //make this dynamic
-      .attr("r", function (d) { return z(d.Population)/2; } )
-      .style("fill", function (d) { return myColor(d.INCOMEPC); } )
-    // -3- Trigger the functions
-    .on("mouseover", showTooltip )
-    .on("mousemove", moveTooltip )
-    .on("mouseleave", hideTooltip )
+    // Add dots
+    svg.append('g')
+      .selectAll("dot")
+      .data(data)
+      .join("circle")
+        .attr("class", "bubbles")
+        .attr("cx", function (d) { return x(d.INCOMEPC); } )
+        .attr("cy", function (d) { return y(d.LifeExpectancy); } ) 
+        .attr("r", function (d) { return z(d.Population)/2; } )
+        .style("fill", function (d) { return myColor(d.INCOMEPC); } )
+      // -3- Trigger the functions
+      .on("mouseover", showTooltip )
+      .on("mousemove", moveTooltip )
+      .on("mouseleave", hideTooltip )
 
-  })
+    })
+
+    

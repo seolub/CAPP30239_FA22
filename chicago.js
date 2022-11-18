@@ -1,9 +1,7 @@
-const tooltip = d3.select("body")
+const tooltip = d3.select("#illinois")
   .append("div")
   .attr("class", "svg-tooltip")
-  .style("position", "absolute")
-  .style("visibility", "hidden");
-
+  
 const svg_map = d3
   .select("#illinois")
   .append("svg")
@@ -20,14 +18,13 @@ Promise.all([
     d.INCOMEPC = +d.INCOMEPC; 
     dataById[d["Community_Area_Number"]] = d;
   }
-  console.log(dataById)
   const communities = chi;
 
   // linear color scale
   const color = d3
     .scaleQuantile()
     .domain(d3.extent(data, (d) => d.INCOMEPC))
-    .range(d3.schemeBlues[9]);
+    .range(["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"]);
 
 // Chicago specific projection
   let projection = d3
@@ -47,14 +44,13 @@ Promise.all([
     .join("path")
     .attr("d", geoGenerator)
     .attr("fill", (d) => {
-      return dataById[d.properties.area_num_1]?.INCOMEPC
+      return dataById[d.properties.area_num_1]?.INCOMEPC 
         ? color(+dataById[d.properties.area_num_1].INCOMEPC)
-        : "blue";
+        : "blue"; //where does area_num1 comes from?
     })
     .attr("stroke", "black")
     .on("mousemove", function (event, d) {
       let info = dataById[d.properties.area_num_1];
-      console.log(info)
       tooltip
         .style("visibility", "visible")
         .html(`${info?.COMMUNITY_AREA_NAME}<br>${info?.INCOMEPC}$`)
@@ -64,7 +60,7 @@ Promise.all([
     })
     .on("mouseout", function () {
       tooltip.style("visibility", "hidden");
-      d3.select(this).attr("fill", d => (d.id in dataById) ? color(dataById[d.id].INCOMEPC) : '#ccc'); //how can i go back to blue
+      d3.select(this).attr("fill", d => color(+dataById[d.properties.area_num_1].INCOMEPC));
     });
 
 });
