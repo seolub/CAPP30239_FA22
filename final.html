@@ -4,34 +4,34 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactivity with D3</title>
+  <title>Inequaity in Chicago</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 
 
 <body>
-    <!-- <h1>Final</h1>
-    <p>
-        Final
-    </p>
-  <div class="split-screen">
-    <div class="split-screen__half">
-      <div id="illinois"></svg></div>
-    </div>
-    <div class="split-screen__half">
-    <div id="chart1"></svg></div>
-    <div id="chart2"></svg></div>
-    <div id="chart3"></svg></div>
-    <div id="chart4"></svg></div>
-    <div id="bubble_plot"></svg></div>
-  </div> -->
-
+  <h1>Inequality in Chicago</h1>
+  <p>Data from <a href="https://data.cityofchicago.org/">Chicago Portal</a></p>
   <div class="row">
-    <div class="column" id ="illinois"></div>
 
-    <div class="column" id="chart1"></div>
+    <div class="column" id="illinois">
+      <h2>Income Per Capita</h2>
+    </div> 
 
-    <div class="column" id="bubble_plot"></div>
+    <div class="column">
+      <div id="bee_charts_container">
+        <h2>Inequality by different Metrics</h2>
+            <div id="chart1"></div>
+            <div id="chart2"></div>
+            <div id="chart3"></div>
+            <div id="chart4"></div>
+          </div>
+    </div>
+
+    <div class="column" id="bubble_plot">
+      <h2>Life Expectancy and Income Per Capita</h2>
+        <p>In this section one will be able to select metrics with a dropdown</p>
+    </div>
   </div>
 
 

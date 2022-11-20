@@ -143,7 +143,7 @@ function BeeswarmChart(data, {
             .attr("text-anchor", "end")
             .text(xLabel));
 
-    const tooltip = d3.select("#g")
+    const tooltip = d3.select("#bee_charts_container")
         .append("div")  
         .attr("class", "svg-tooltip")
 
@@ -159,7 +159,7 @@ function BeeswarmChart(data, {
         .duration(200)
       tooltip
         .style("visibility", "visible")
-        .html(`${X}`)
+        .html(`${data[X].COMMUNITY_AREA_NAME}`)
         .style("top", (event.pageY - 10) + "px")
         .style("left", (event.pageX + 10) + "px");
         d3.select(this).style("stroke", "black");
