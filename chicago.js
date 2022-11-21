@@ -9,7 +9,7 @@ const svg_map = d3
 
 Promise.all([
   //load two datasets
-  d3.csv("data/final_data.csv"),
+  d3.csv("data/Final_data.csv"),
   d3.json("data/Boundaries - Community Areas (current).geojson"),
 ]).then(([data, chi]) => {
   const dataById = {};
