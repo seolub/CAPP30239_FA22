@@ -15,7 +15,7 @@ var svg = d3.select("#bubble_plot")
           "translate(" + margin.left + "," + margin.top + ")");
 
 //Read the data
-d3.csv("data/final_data.csv").then((data) => {
+d3.csv("data/Final_data.csv").then((data) => {
 
   // Add X axis
   var x = d3.scaleLinear()
