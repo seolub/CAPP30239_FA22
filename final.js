@@ -26,7 +26,7 @@ d3.csv('data/Final_data.csv').then(data => {
     
     chart4 = BeeswarmChart(data, {
         x: d => Number(d.HOMICIDE),
-        xLabel: "Homicide Rate →",
+        xLabel: "Homicides →",
         title: d => d.Community_Area_Number,
         width: 600
         }) 
@@ -51,13 +51,7 @@ d3.csv('data/Final_data.csv').then(data => {
         title: d => d.Community_Area_Number,
         width: 600
         })         
-    
-    chart8 = BeeswarmChart(data, {
-        x: d => Number(d['UNEMPLOYED16+']),
-        xLabel: "Homicide Rate →",
-        title: d => d.Community_Area_Number,
-        width: 600
-        })
+  
 
     // (5) APPEND TO PAGE
     document.getElementById("chart1").appendChild(chart1)
@@ -66,8 +60,7 @@ d3.csv('data/Final_data.csv').then(data => {
     document.getElementById("chart4").appendChild(chart4)
     document.getElementById("chart5").appendChild(chart5)
     document.getElementById("chart6").appendChild(chart6) //remove NAs
-    document.getElementById("chart7").appendChild(chart7)
-    document.getElementById("chart8").appendChild(chart8); 
+    document.getElementById("chart7").appendChild(chart7);
 });
 
 // Copyright 2021 Observable, Inc.
@@ -83,7 +76,7 @@ function BeeswarmChart(data, {
     padding = 1.5, // (fixed) padding between the circles
     marginTop = 10, // top margin, in pixels
     marginRight = 20, // right margin, in pixels
-    marginBottom = 30, // bottom margin, in pixels
+    marginBottom = 40, // bottom margin, in pixels
     marginLeft = 20, // left margin, in pixels
     width = 640, // outer width, in pixels
     height, // outer height, in pixels
@@ -173,6 +166,7 @@ function BeeswarmChart(data, {
             .attr("y", marginBottom - 4)
             .attr("fill", "currentColor")
             .attr("text-anchor", "end")
+            .attr("class", "axis")
             .text(xLabel));
 
     const tooltip = d3.select("body")
@@ -182,7 +176,7 @@ function BeeswarmChart(data, {
     const color_1 = d3
       .scaleQuantile()
       .domain(d3.extent(data, (d) => d.INCOMEPC))
-      .range(["#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b", "#00008b", "#000033"]
+      .range(['#b6d4e9','#9dc9e2','#81badb','#65a9d3','#4c98ca','#3686c0','#2372b4','#145fa6','#0b4c92','#083877']
       );
 
     const showTooltip = function(event, X) {
