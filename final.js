@@ -30,12 +30,44 @@ d3.csv('data/Final_data.csv').then(data => {
         title: d => d.Community_Area_Number,
         width: 600
         }) 
+
+    chart5 = BeeswarmChart(data, {
+        x: d => Number(d.Teen_Births_2009), //when zero
+        xLabel: "Teen Births →",
+        title: d => d.Community_Area_Number,
+        width: 600
+        })
     
+    chart6 = BeeswarmChart(data, {
+        x: d => Number(d['NO_HIGHSCHOOLDIPLOMA25+']),
+        xLabel: "No High School Diploma (%) →",
+        title: d => d.Community_Area_Number,
+        width: 600
+        }) 
+    
+    chart7 = BeeswarmChart(data, {
+        x: d => Number(d.HOUSING_CROWDED),
+        xLabel: "Housing Crowded (%) →",
+        title: d => d.Community_Area_Number,
+        width: 600
+        })         
+    
+    chart8 = BeeswarmChart(data, {
+        x: d => Number(d['UNEMPLOYED16+']),
+        xLabel: "Homicide Rate →",
+        title: d => d.Community_Area_Number,
+        width: 600
+        })
+
     // (5) APPEND TO PAGE
     document.getElementById("chart1").appendChild(chart1)
     document.getElementById("chart2").appendChild(chart2) //remove NAs
     document.getElementById("chart3").appendChild(chart3)
-    document.getElementById("chart4").appendChild(chart4); 
+    document.getElementById("chart4").appendChild(chart4)
+    document.getElementById("chart5").appendChild(chart5)
+    document.getElementById("chart6").appendChild(chart6) //remove NAs
+    document.getElementById("chart7").appendChild(chart7)
+    document.getElementById("chart8").appendChild(chart8); 
 });
 
 // Copyright 2021 Observable, Inc.
@@ -150,7 +182,7 @@ function BeeswarmChart(data, {
     const color_1 = d3
       .scaleQuantile()
       .domain(d3.extent(data, (d) => d.INCOMEPC))
-      .range(["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"]
+      .range(["#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b", "#00008b", "#000033"]
       );
 
     const showTooltip = function(event, X) {

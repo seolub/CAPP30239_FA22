@@ -24,7 +24,7 @@ Promise.all([
   const color = d3
     .scaleQuantile()
     .domain(d3.extent(data, (d) => d.INCOMEPC))
-    .range(["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"]);
+    .range(["#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b", "#00008b", "#000033"]);
 
 // Chicago specific projection
   let projection = d3
@@ -54,7 +54,7 @@ Promise.all([
       let info = dataById[d.properties.area_num_1];
       tooltip
         .style("visibility", "visible")
-        .html(`${info?.COMMUNITY_AREA_NAME}<br>${info?.INCOMEPC}$`)
+        .html(`${info?.COMMUNITY_AREA_NAME}<br>$${info?.INCOMEPC}`)
         .style("top", (event.pageY - 10) + "px")
         .style("left", (event.pageX + 10) + "px");
       d3.select(this).attr("fill", "red");

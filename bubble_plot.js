@@ -17,7 +17,7 @@ var svg = d3.select("#bubble_plot")
 //Read the data
 d3.csv("data/Final_data.csv").then((data) => {
 
-  var allGroup = ["LifeExpec", "ACT", "Unemployment", "Homicide Rate"]
+  var allGroup = ["LifeExpectancy", "ACT", "Unemployment", "Homicide Rate"]
 
 
   // Add X axis
@@ -44,7 +44,7 @@ d3.csv("data/Final_data.csv").then((data) => {
   var myColor = d3
     .scaleQuantile()
     .domain(d3.extent(data, (d) => d.INCOMEPC))
-    .range(["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"]);
+    .range(["#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b", "#00008b", "#000033"]);
 
    // -1- Create a tooltip div that is hidden by default:
    const tooltip = d3.select("body")
