@@ -17,6 +17,9 @@ var svg = d3.select("#bubble_plot")
 //Read the data
 d3.csv("data/Final_data.csv").then((data) => {
 
+  var allGroup = ["LifeExpec", "ACT", "Unemployment", "Homicide Rate"]
+
+
   // Add X axis
   var x = d3.scaleLinear()
     .domain([0, 100000])
@@ -44,7 +47,7 @@ d3.csv("data/Final_data.csv").then((data) => {
     .range(["#e3eef9","#cfe1f2","#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b"]);
 
    // -1- Create a tooltip div that is hidden by default:
-   const tooltip = d3.select("#bubble_plot")
+   const tooltip = d3.select("body")
       .append("div")
       .attr("class", "svg-tooltip");
 
@@ -75,7 +78,7 @@ d3.csv("data/Final_data.csv").then((data) => {
     }
 
     // Add dots
-    svg.append('g')
+    var bubbles = svg.append('g')
       .selectAll("dot")
       .data(data)
       .join("circle")
@@ -89,6 +92,46 @@ d3.csv("data/Final_data.csv").then((data) => {
       .on("mousemove", moveTooltip )
       .on("mouseleave", hideTooltip )
 
+
+    //update function
+    d3.select("#selectButton")
+    .selectAll('myOptions')
+    .data(allGroup)
+    .enter()
+    .append('option')
+    .text(function (d) { return d; }) // text showed in the menu
+    .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+    // A function that update the chart
+    function update(selectedGroup) {
+      // Give these new data to update line
+
+      var dataFilter = data.map(function(d){return {INCOMEPC: d.INCOMEPC, value:d[selectedGroup], Population: d.Population} })
+
+      bubbles
+        .transition()
+        .duration(1000)
+        .data(dataFilter)
+        .join("circle")
+        .attr("cx", function (d) { return x(d.INCOMEPC); } )
+        .attr("cy", function (d) { return y(d.value); } ) 
+        .attr("r", function (d) { return z(d.Population)/2; } )
+        .style("fill", function (d) { return myColor(d.INCOMEPC); } )
+      
+      y
+        .domain([d3.min(dataFilter, d => d.value),  d3.max(dataFilter, d => d.value)]).nice() 
+            .range([ height, 0]);
+
+
+    // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        update(selectedOption)
     })
+  }
+
+})
 
     

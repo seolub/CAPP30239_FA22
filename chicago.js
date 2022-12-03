@@ -1,4 +1,4 @@
-const tooltip = d3.select("#illinois")
+const tooltip = d3.select("body")
   .append("div")
   .attr("class", "svg-tooltip")
   
@@ -33,7 +33,8 @@ Promise.all([
     .rotate([87.65, 0])
     .parallels([35, 50])
     .scale(70000)
-    .translate([width / 2, height / 2]);
+    .translate([width / 2, height / 2])
+    .fitSize([width, height], communities);
 
   let geoGenerator = d3.geoPath().projection(projection);
 

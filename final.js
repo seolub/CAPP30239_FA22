@@ -12,7 +12,7 @@ d3.csv('data/Final_data.csv').then(data => {
       data.filter((d) => d.ACT_GRADE11 > 0),
       {
         x: d => Number(d.ACT_GRADE11), //when zero
-        xLabel: "ACT_GRADE11 (Percentile) →",
+        xLabel: "Act Grade 11 (Percentile) →",
         title: d => d.Community_Area_Number,
         width: 600
         })
@@ -143,7 +143,7 @@ function BeeswarmChart(data, {
             .attr("text-anchor", "end")
             .text(xLabel));
 
-    const tooltip = d3.select("#bee_charts_container")
+    const tooltip = d3.select("body")
         .append("div")  
         .attr("class", "svg-tooltip")
 
