@@ -17,8 +17,6 @@ var svg = d3.select("#bubble_plot")
 //Read the data
 d3.csv("data/Final_data.csv").then((data) => {
 
-  var allGroup = ["LifeExpectancy", "ACT", "Unemployment", "Homicide Rate"]
-
 
   // Add X axis
   var x = d3.scaleLinear()
@@ -33,7 +31,8 @@ d3.csv("data/Final_data.csv").then((data) => {
     .domain([d3.min(data, d => d.LifeExpectancy),  d3.max(data, d => d.LifeExpectancy)]).nice() 
     .range([ height, 0]);
   svg.append("g")
-    .call(d3.axisLeft(y));
+    .call(d3.axisLeft(y))
+    .attr("id", "bubbleYAxis");
    
   // Add a scale for bubble size
   var z = d3.scaleLinear()
@@ -44,7 +43,7 @@ d3.csv("data/Final_data.csv").then((data) => {
   var myColor = d3
     .scaleQuantile()
     .domain(d3.extent(data, (d) => d.INCOMEPC))
-    .range(["#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b", "#00008b", "#000033"]);
+    .range(['#b6d4e9','#9dc9e2','#81badb','#65a9d3','#4c98ca','#3686c0','#2372b4','#145fa6','#0b4c92','#083877']);
 
    // -1- Create a tooltip div that is hidden by default:
    const tooltip = d3.select("body")
@@ -58,7 +57,7 @@ d3.csv("data/Final_data.csv").then((data) => {
         .duration(200)
       tooltip
         .style("visibility", "visible")
-        .html(`${d.COMMUNITY_AREA_NAME} <br> ${d.LifeExpectancy} `)
+        .html(`${d.COMMUNITY_AREA_NAME} <br> ${d.LifeExpectancy || d.value}`)
         .style("top", (event.pageY - 10) + "px")
         .style("left", (event.pageX + 10) + "px");
         d3.select(this).style("stroke", "black");
@@ -93,45 +92,73 @@ d3.csv("data/Final_data.csv").then((data) => {
       .on("mouseleave", hideTooltip )
 
 
+    var allGroup = ['LifeExpectancy', 'HOMICIDE', 'Unemployment', 'ACT_GRADE11', 'NO_HIGHSCHOOLDIPLOMA25+','Teen_Births_2009','HOUSING_CROWDED'] 
+
+    var dict_map = {'LifeExpectancy': 'Life Expectancy', 
+                    'HOMICIDE': 'Homicide',
+                    'Unemployment': 'Unemployment Rate (%)',
+                    'ACT_GRADE11': 'Act Grade 11 (Percentile}',
+                    'Teen_Births_2009': 'Teen Births',
+                    'NO_HIGHSCHOOLDIPLOMA25+': 'Adults without High School Diploma',
+                    'HOUSING_CROWDED': 'Housing Crowded (%)'}
+
     //update function
     d3.select("#selectButton")
     .selectAll('myOptions')
     .data(allGroup)
     .enter()
     .append('option')
-    .text(function (d) { return d; }) // text showed in the menu
+    .text(function (d) { return dict_map[d]; }) // text showed in the menu
     .attr("value", function (d) { return d; }) // corresponding value returned by the button
 
     // A function that update the chart
     function update(selectedGroup) {
       // Give these new data to update line
 
-      var dataFilter = data.map(function(d){return {INCOMEPC: d.INCOMEPC, value:d[selectedGroup], Population: d.Population} })
-
-      bubbles
-        .transition()
-        .duration(1000)
-        .data(dataFilter)
-        .join("circle")
-        .attr("cx", function (d) { return x(d.INCOMEPC); } )
-        .attr("cy", function (d) { return y(d.value); } ) 
-        .attr("r", function (d) { return z(d.Population)/2; } )
-        .style("fill", function (d) { return myColor(d.INCOMEPC); } )
+      var dataFilter = data.map(function (d) {
+        return {
+          COMMUNITY_AREA_NAME: d.COMMUNITY_AREA_NAME,
+          INCOMEPC: +d.INCOMEPC,
+          value: +d[selectedGroup],
+          Population: +d.Population,
+        };
+      });  
       
-      y
-        .domain([d3.min(dataFilter, d => d.value),  d3.max(dataFilter, d => d.value)]).nice() 
-            .range([ height, 0]);
+      y.domain([
+        d3.min(dataFilter, (d) => d.value),
+        d3.max(dataFilter, (d) => d.value),
+      ])
+        .nice()
+        .range([height, 0]);
 
+      // Update Y Axis
+    d3.select("#bubbleYAxis").call(d3.axisLeft(y));
 
+    d3.selectAll(".bubbles")
+      .data(dataFilter)
+      .join("circle")
+      .transition()
+      .duration(1000)
+      .attr("cx", function (d) {
+        return x(d.INCOMEPC);
+      })
+      .attr("cy", function (d) {
+        return y(d.value);
+      })
+      .attr("r", function (d) {
+        return z(d.Population) / 2;
+      })
+      .style("fill", function (d) {
+        return myColor(d.INCOMEPC);
+      });
+  }
     // When the button is changed, run the updateChart function
     d3.select("#selectButton").on("change", function(d) {
-        // recover the option that has been chosen
-        var selectedOption = d3.select(this).property("value")
-        // run the updateChart function with this selected option
-        update(selectedOption)
-    })
-  }
-
+      // recover the option that has been chosen
+      var selectedOption = d3.select(this).property("value")
+      // run the updateChart function with this selected option
+      update(selectedOption)
+  })
 })
 
     

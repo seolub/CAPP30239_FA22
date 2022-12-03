@@ -20,11 +20,11 @@ Promise.all([
   }
   const communities = chi;
 
-  // linear color scale
+  // color scale
   const color = d3
     .scaleQuantile()
     .domain(d3.extent(data, (d) => d.INCOMEPC))
-    .range(["#b5d4e9","#93c3df","#6daed5","#4b97c9","#2f7ebc","#1864aa","#0a4a90","#08306b", "#00008b", "#000033"]);
+    .range(['#b6d4e9','#9dc9e2','#81badb','#65a9d3','#4c98ca','#3686c0','#2372b4','#145fa6','#0b4c92','#083877']);
 
 // Chicago specific projection
   let projection = d3
@@ -47,7 +47,7 @@ Promise.all([
     .attr("fill", (d) => {
       return dataById[d.properties.area_num_1]?.INCOMEPC 
         ? color(+dataById[d.properties.area_num_1].INCOMEPC)
-        : "blue"; //where does area_num1 comes from?
+        : "blue"; 
     })
     .attr("stroke", "black")
     .on("mousemove", function (event, d) {
@@ -63,5 +63,28 @@ Promise.all([
       tooltip.style("visibility", "hidden");
       d3.select(this).attr("fill", d => color(+dataById[d.properties.area_num_1].INCOMEPC));
     });
+
+  // Legend
+  d3.select("#illinois")
+  .node()
+  .appendChild(
+    Legend(
+      d3.scaleOrdinal(
+          [1,2,3,4,5,6,7,8,9,10],
+          (['#b6d4e9',
+          '#9dc9e2',
+          '#81badb',
+          '#65a9d3',
+          '#4c98ca',
+          '#3686c0',
+          '#2372b4',
+          '#145fa6',
+          '#0b4c92',
+          '#083877'])
+      ),
+      {title: "Decile of Income per Capita in USD "}
+    ));
+
+    console.log(color)
 
 });
