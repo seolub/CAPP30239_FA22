@@ -38,7 +38,7 @@ h1  {
 }
 
 h3 {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 1rem;
   text-align: left;
   margin-bottom: 10px;
@@ -54,15 +54,25 @@ label {
   color: #444;
 }
 
-a {
+a.nav {
   font-family: 'HelveticaNeue-Light', sans-serif;
-  font-size: 0.8rem;
   font-style: italic;
   color: #999;
   text-align: center;
+  font-size: 0.8rem;
   margin-top: 20px;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease
 }
+
+a.paragr {
+  font-family: 'HelveticaNeue-Light', sans-serif;
+  color: #999;
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 20px;
+  transition: all 0.2s ease
+}
+
 
 footer {
   font-family: 'HelveticaNeue-Light', sans-serif;
@@ -102,7 +112,7 @@ footer {
 .section-container > .text-container {
   width: 40%;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
   font-size: 1rem;
   line-height: 1.5;
   color: #444;

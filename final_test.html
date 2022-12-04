@@ -15,7 +15,7 @@
     <section id="intro">
       <div style="text-align: center;">
       <h1>Inequality in Chicago</h1>
-      <footer>Data from <a href="https://data.cityofchicago.org/">City of Chicago Portal</a></footer>
+      <footer>Data from <a class="nav" href="https://data.cityofchicago.org/">City of Chicago Portal</a></footer>
     </div>
     </section>
       <section class="section-container">
@@ -48,20 +48,21 @@
 
     <section class="section-container">
 	<div class="text-container">
-    <h4>Other inequalities</h4>
+    <h4>Beyond income inequality</h4>
     </p>Income inequality is further compounded by the lack of access to resources and opportunities, creating a cycle of poverty.</p>
     <p>
       On the right, we can find the community areas that we plotted in the visualization of Chicago. The color from the map remains the same, 
       which means that areas plotted in darker blues are wealthier, while areas plotted in lighter blues are poorer. 
     <p>
       We can see how for unemployment,
-      Homicide Rate, Teen Births, Percentage of adults without highschool diploma and percentage of households crowded, we see all the wealthier areas on the left,
-      while we find poorer areas on the left of the visualizations. If all these metrics were not correlated with income per capita we would see lighter and darker dots equally spread over the axis. 
+      homicides, teen births, percentage of adults without highschool diploma and percentage of households crowded, we see all the wealthier areas on the left,
+      while we find poorer areas on the right of the visualizations. If all these metrics were not correlated with income per capita we would see lighter and darker dots equally spread over the axis. 
+      However, we can see how this is not the clase.
     <p>
       Poorer areas tend to have much higher rates of unemployment, homicide rates, teen births, adults without high school diploma and crowded households. 
     </p>
       These five visualizations provide metrics where richer community areas on the left. In the next section we see how 
-      Income Per Capita is assocaited with other metrics where richer community areas are on the right. 
+      Income Per Capita is associated with other metrics where richer community areas are on the right. 
     <p>
   </div>
 
@@ -76,28 +77,52 @@
 </section>
     <section class="section-container">
 	<div class="text-container">
-    <h4>Educational Attainment and Life Expectancy</h4>
+    <h4>Education and Life Expectancy</h4>
   </p>
-  These five visualizations provide metrics where richer community areas on the left. In the next section we see how 
-  Income Per Capita is associated with other metrics where richer community areas are on the right. 
-<p>
-  </div>
+  The first graph shows the performance of students enrolled in public schools in the ACT tests in Grade 11. We can see how students in the richest community area, 
+  Near North Side, score in the 99 percentile while students from poorer community areas tend to score below the percentile 20. 
+  </p>
+  The second graph illustrates disparities in life expectancy. Again we can see almost 20 year life expectancy difference between some of the poorest community areas
+  and some of the richest community areas.
+  <p>
 
-         <div id="bee_charts_container" class="chart">
-        <p>         </p>
-            <div id="chart2"></div>
+      </div>
+
+            <div id="bee_charts_container" class="chart">
             <p>         </p>
-            <div id="chart3"></div>
-          </div>
-    </div>
-</section>
+                <div id="chart2"></div>
+                <p>         </p>
+                <div id="chart3"></div>
+              </div>
+        </div>
+    </section>
 
 
     <section class="section-container">
         <div class="text-container">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
- sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          <h4>Exploring inequality</h4>
+          <p>
+            The last visualization allows to explore all the metrics that this article has provided. Note that community areas where the ACT score percentile is zero
+            had missing data.
+          </p>
+            More metrics can be explored in the City of Chicago Portal, where you can find data from the
+            Chicago Public Schools, U.S. Census Bureau, and Illinois Department of Public Health (IDPH). The
+            data for this article has been extracted from the following links:
+          <p>
+            1. <a class="paragr" href=https://data.cityofchicago.org/Health-Human-Services/Census-Data-Selected-socioeconomic-indicators-in-C/kn9c-c2s2>Income per capita, Homicides, Unemployment and Housing data</a>
+          <p>
+            2. <a class="paragr" href=https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-and-birth-rates-in/4arr-givg>Teen Births per 100.000 people</a>
+          <p>
+            3. <a class="paragr" href=https://data.cityofchicago.org/Education/Chicago-Public-Schools-High-School-Progress-Report/2m8w-izji>ACT Scores Percentile from Chicago Public Schools</a>
+          <p>
+            4. <a class="paragr" href=https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-and-birth-rates-in/4arr-givg>Life Expectancy</a>
+          </p>
+            Details about the technical aspects of the project (references and process can be found in the <a class="paragr" href=https://data.cityofchicago.org/Health-Human-Services/Public-Health-Statistics-Births-and-birth-rates-in/4arr-givg> README</a> document.
+
+
+
+          
+          </p>
         </div>
 
 	<div id="bubble_plot" class="chart">
