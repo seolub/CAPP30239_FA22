@@ -99,7 +99,7 @@ d3.csv("data/Final_data.csv").then((data) => {
                     'Unemployment': 'Unemployment Rate (%)',
                     'ACT_GRADE11': 'Act Grade 11 (Percentile}',
                     'Teen_Births_2009': 'Teen Births per 100.000 people',
-                    'NO_HIGHSCHOOLDIPLOMA25+': 'Adults without High School Diploma',
+                    'NO_HIGHSCHOOLDIPLOMA25+': 'Adults without High School Diploma (%)',
                     'HOUSING_CROWDED': 'Housing Crowded (%)'}
 
     //update function
