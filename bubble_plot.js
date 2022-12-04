@@ -94,11 +94,11 @@ d3.csv("data/Final_data.csv").then((data) => {
 
     var allGroup = ['LifeExpectancy', 'HOMICIDE', 'Unemployment', 'ACT_GRADE11', 'NO_HIGHSCHOOLDIPLOMA25+','Teen_Births_2009','HOUSING_CROWDED'] 
 
-    var dict_map = {'LifeExpectancy': 'Life Expectancy', 
-                    'HOMICIDE': 'Homicide',
+    var dict_map = {'LifeExpectancy': 'Life Expectancy (Years)', 
+                    'HOMICIDE': 'Homicides per 100.000 people',
                     'Unemployment': 'Unemployment Rate (%)',
                     'ACT_GRADE11': 'Act Grade 11 (Percentile}',
-                    'Teen_Births_2009': 'Teen Births',
+                    'Teen_Births_2009': 'Teen Births per 100.000 people',
                     'NO_HIGHSCHOOLDIPLOMA25+': 'Adults without High School Diploma',
                     'HOUSING_CROWDED': 'Housing Crowded (%)'}
 
