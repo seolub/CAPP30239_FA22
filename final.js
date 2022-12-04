@@ -12,7 +12,7 @@ d3.csv('data/Final_data.csv').then(data => {
       data.filter((d) => d.ACT_GRADE11 > 0),
       {
         x: d => Number(d.ACT_GRADE11), //when zero
-        xLabel: "Act Grade 11 (Percentile) →",
+        xLabel: "ACT Grade 11 (Percentile) →",
         title: d => d.Community_Area_Number,
         width: 600
         })
@@ -26,14 +26,14 @@ d3.csv('data/Final_data.csv').then(data => {
     
     chart4 = BeeswarmChart(data, {
         x: d => Number(d.HOMICIDE),
-        xLabel: "Homicides →",
+        xLabel: "Homicides per 100.000 people →",
         title: d => d.Community_Area_Number,
         width: 600
         }) 
 
     chart5 = BeeswarmChart(data, {
         x: d => Number(d.Teen_Births_2009), //when zero
-        xLabel: "Teen Births →",
+        xLabel: "Teen Births per 100.000 people →",
         title: d => d.Community_Area_Number,
         width: 600
         })
@@ -47,7 +47,7 @@ d3.csv('data/Final_data.csv').then(data => {
     
     chart7 = BeeswarmChart(data, {
         x: d => Number(d.HOUSING_CROWDED),
-        xLabel: "Housing Crowded (%) →",
+        xLabel: "Crowded Housing (%) →",
         title: d => d.Community_Area_Number,
         width: 600
         })         
@@ -55,11 +55,11 @@ d3.csv('data/Final_data.csv').then(data => {
 
     // (5) APPEND TO PAGE
     document.getElementById("chart1").appendChild(chart1)
-    document.getElementById("chart2").appendChild(chart2) //remove NAs
+    document.getElementById("chart2").appendChild(chart2) 
     document.getElementById("chart3").appendChild(chart3)
     document.getElementById("chart4").appendChild(chart4)
     document.getElementById("chart5").appendChild(chart5)
-    document.getElementById("chart6").appendChild(chart6) //remove NAs
+    document.getElementById("chart6").appendChild(chart6) 
     document.getElementById("chart7").appendChild(chart7);
 });
 
@@ -86,7 +86,6 @@ function BeeswarmChart(data, {
   } = {}) {
     // Compute values.
     const X = d3.map(data, x);
-    console.log(data)
     const T = title == null ? null : d3.map(data, title);
     
     // Compute which data points are considered defined.

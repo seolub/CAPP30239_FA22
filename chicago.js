@@ -85,6 +85,4 @@ Promise.all([
       {title: "Decile of Income per Capita in USD "}
     ));
 
-    console.log(color)
-
 });
