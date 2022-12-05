@@ -3,7 +3,7 @@
 The result of this project can be found in https://seolub.github.io/CAPP30239_FA22/project/index.html.
 
 ### Interest in this topic 
-My interest in Public Policy stems from a broader interest in how policy can help address inequality issues. Choosing Chicago to explore inequality by community area apprears as a clear option for two reasons: I have lived in Chicago now for 4 years, and Chicago's inequality issues are that prominent that have made it to the [international press](https://www.economist.com/united-states/2019/10/10/a-ride-along-chicagos-red-line)
+My interest in Public Policy stems from a broader interest in how policy can help address inequality issues. Choosing Chicago to explore inequality by community area apprears as a clear option for two reasons: I have lived in Chicago now for 4 years, and Chicago's inequality issues are that prominent that have made it to the [international press](https://www.economist.com/united-states/2019/10/10/a-ride-along-chicagos-red-line).
 
 
 ### Data
@@ -30,4 +30,4 @@ The first map was a no brainer to show disparities in income by neighborhood. Th
 Learning Javascript, CSS, and HTML at the same time as D3 was challenging. The code could be cleaner and more efficient and I would like to spend more time in the future polishing this project.
 
 ### Sources
-Some of the text has been developed using the new tool recently released [ChatGPT][https://chat.openai.com/chat]. It is incredible how you can give instructions about what you want and how AI can be so precise returning an output. Big chunks of code have come from [Tiffany France's Github](ttps://github.com/tiffanyfrance/CAPP30239_FA22), Observable, and the huge help of the TA Sandy Guberti-NG. Big thanks to her.
+Some of the text has been developed using the new tool recently released [ChatGPT](https://chat.openai.com/chat). It is incredible how you can give instructions about what you want and how AI can be so precise returning an output. Big chunks of code have come from [Tiffany France's Github](ttps://github.com/tiffanyfrance/CAPP30239_FA22), Observable, and the huge help of the TA Sandy Guberti-Ng. Big thanks to her.

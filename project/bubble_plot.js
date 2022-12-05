@@ -47,13 +47,13 @@ d3.csv("data/Final_data.csv").then((data) => {
     .domain(d3.extent(data, (d) => d.INCOMEPC))
     .range(['#b6d4e9','#9dc9e2','#81badb','#65a9d3','#4c98ca','#3686c0','#2372b4','#145fa6','#0b4c92','#083877']);
 
-   // -1- Create a tooltip div that is hidden by default:
-   const tooltip = d3.select("body")
-      .append("div")
-      .attr("class", "svg-tooltip");
+  // -1- Create a tooltip div that is hidden by default:
+  const tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "svg-tooltip");
 
- // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
-    const showTooltip = function(event, d) {
+  //2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
+  const showTooltip = function(event, d) {
       tooltip
         .transition()
         .duration(200)
@@ -79,19 +79,19 @@ d3.csv("data/Final_data.csv").then((data) => {
     }
 
     // Add dots
-    var bubbles = svg.append('g')
-      .selectAll("dot")
-      .data(data)
-      .join("circle")
-        .attr("class", "bubbles")
-        .attr("cx", function (d) { return x(d.INCOMEPC); } )
-        .attr("cy", function (d) { return y(d.LifeExpectancy); } ) 
-        .attr("r", function (d) { return z(d.Population)/2; } )
-        .style("fill", function (d) { return myColor(d.INCOMEPC); } )
-      // -3- Trigger the functions
-      .on("mouseover", showTooltip )
-      .on("mousemove", moveTooltip )
-      .on("mouseleave", hideTooltip )
+  var bubbles = svg.append('g')
+    .selectAll("dot")
+    .data(data)
+    .join("circle")
+      .attr("class", "bubbles")
+      .attr("cx", function (d) { return x(d.INCOMEPC); } )
+      .attr("cy", function (d) { return y(d.LifeExpectancy); } ) 
+      .attr("r", function (d) { return z(d.Population)/2; } )
+      .style("fill", function (d) { return myColor(d.INCOMEPC); } )
+    // -3- Trigger the functions
+    .on("mouseover", showTooltip )
+    .on("mousemove", moveTooltip )
+    .on("mouseleave", hideTooltip )
 
 
     var allGroup = ['LifeExpectancy', 'HOMICIDE', 'Unemployment', 'ACT_GRADE11', 'NO_HIGHSCHOOLDIPLOMA25+','Teen_Births_2009','HOUSING_CROWDED'] 
