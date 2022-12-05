@@ -1,5 +1,3 @@
-
-
 d3.csv('data/Final_data.csv').then(data => {
     chart1 = BeeswarmChart(data, {
         x: d => Number(d.Unemployment),
@@ -66,6 +64,7 @@ d3.csv('data/Final_data.csv').then(data => {
 // Copyright 2021 Observable, Inc.
 // Released under the ISC license.
 // https://observablehq.com/@d3/mirrored-beeswarm
+
 function BeeswarmChart(data, {
     value = d => d, // convience alias for x
     label, // convenience alias for xLabel
