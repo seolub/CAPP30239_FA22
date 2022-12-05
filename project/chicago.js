@@ -54,7 +54,7 @@ Promise.all([
       let info = dataById[d.properties.area_num_1];
       tooltip
         .style("visibility", "visible")
-        .html(`${info?.COMMUNITY_AREA_NAME}<br>$${info?.INCOMEPC}`)
+        .html(`${info?.COMMUNITY_AREA_NAME}<br>$${d3.format(",.3r")(info?.INCOMEPC)}`)
         .style("top", (event.pageY - 10) + "px")
         .style("left", (event.pageX + 10) + "px");
       d3.select(this).attr("fill", "red");

@@ -14,6 +14,7 @@ var svg = d3.select("#bubble_plot")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
+
 //Read the data
 d3.csv("data/Final_data.csv").then((data) => {
 
@@ -24,7 +25,8 @@ d3.csv("data/Final_data.csv").then((data) => {
     .range([0, width ]);
   svg.append("g")
     .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
+    .call(d3.axisBottom(x).tickFormat(d3.format("$,.1r")).ticks(5));
+
 
   // Add Y axis
   var y = d3.scaleLinear()
@@ -132,7 +134,7 @@ d3.csv("data/Final_data.csv").then((data) => {
         .range([height, 0]);
 
       // Update Y Axis
-    d3.select("#bubbleYAxis").call(d3.axisLeft(y));
+    d3.select("#bubbleYAxis").transition().duration(1000).call(d3.axisLeft(y));
 
     d3.selectAll(".bubbles")
       .data(dataFilter)
